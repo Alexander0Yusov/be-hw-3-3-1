@@ -11,13 +11,14 @@ import { postCommentHandler } from './handlers/post-comment.handler';
 import { accessTokenGuard } from '../../5-auth/router/guards/access.token.guard';
 import { CommentSortField } from './input/comment-sort-field';
 import { getCommentListHandler } from './handlers/get-comment-list.handler';
+import { accessTokenNoStrict } from '../../5-auth/router/guards/access.token.nostrict';
 
 export const postsRouter = Router({});
 
 postsRouter
   .get('', paginationAndSortingValidation(PostSortField), getPostListHandler)
 
-  .get('/:id/comments', paginationAndSortingValidation(CommentSortField), getCommentListHandler)
+  .get('/:id/comments', accessTokenNoStrict, paginationAndSortingValidation(CommentSortField), getCommentListHandler)
 
   .post('', superAdminGuardMiddleware, postDtoValidationMiddleware, errorsCatchMiddleware, postPostHandler)
 

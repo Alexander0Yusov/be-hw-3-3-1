@@ -1,11 +1,16 @@
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 
 export type Comment = {
   content: string;
+
   commentatorInfo: {
-    userId: ObjectId;
+    userId: Types.ObjectId;
     userLogin: string;
   };
-  postId: ObjectId;
+
+  postId: Types.ObjectId;
   createdAt: Date;
+
+  likeCount: number;
+  dislikeCount: number;
 };

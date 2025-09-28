@@ -2,14 +2,15 @@ import { Response } from 'express';
 import { HttpStatus } from '../../../core/types/HttpStatus';
 import { postsService } from '../../application/posts.service';
 import { createErrorMessages } from '../../../core/utils/error.utils';
-import { commentsService } from '../../../6-comments/application/comments.service';
 import { RequestWithParamsAndBodyAndUserId } from '../../../core/types/requests';
 import { IdType } from '../../../core/types/id';
 import { CommentInputDto } from '../../../6-comments/dto/comment-input.dto';
 import { UsersQwRepository } from '../../../4-users/qw-repository/users-qw-repository';
 import { container } from '../../../composition-root';
+import { CommentsService } from '../../../6-comments/application/comments.service';
 
 const usersQwRepository = container.get<UsersQwRepository>(UsersQwRepository);
+const commentsService = container.get<CommentsService>(CommentsService);
 
 export async function postCommentHandler(
   req: RequestWithParamsAndBodyAndUserId<IdType, CommentInputDto, IdType>,

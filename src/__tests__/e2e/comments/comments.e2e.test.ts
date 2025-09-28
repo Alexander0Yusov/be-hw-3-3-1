@@ -9,6 +9,8 @@ import { db } from '../../../db/mongo.db';
 import { SETTINGS } from '../../../core/settings/settings';
 import { createFakeBlog } from '../../utils/blogs/create-fake-blog';
 import { createFakeUser } from '../../utils/users/create-fake-user';
+import { runDb } from '../../../db/mongoose.db';
+import mongoose from 'mongoose';
 
 describe('Comment API', () => {
   const app = express();
@@ -16,6 +18,7 @@ describe('Comment API', () => {
 
   beforeAll(async () => {
     await db.run(SETTINGS.MONGO_URL);
+    await runDb(SETTINGS.MONGO_URL);
 
     await request(app)
       .delete(TESTING_PATH + '/all-data')
@@ -24,6 +27,7 @@ describe('Comment API', () => {
 
   afterAll(async () => {
     await db.stop();
+    await mongoose.disconnect();
   });
 
   it('should create comment; POST comments', async () => {
